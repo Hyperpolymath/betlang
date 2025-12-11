@@ -1,76 +1,284 @@
 = betlang
-Jonathan D.A. Jewell <jonathan.jewell@gmail.com>
-:toc: macro
-:icons: font
-:source-highlighter: rouge
-:experimental:
-:url-github: https://github.com/hyperpolymath/betlang
-:url-gitlab: https://gitlab.com/hyperpolymath/betlang
-:url-bitbucket: https://bitbucket.org/hyperpolymath/betlang
-:url-codeberg: https://codeberg.org/hyperpolymath/betlang
 
-Betting and odds calculation domain-specific language
+*A ternary probabilistic programming language for modeling uncertainty*
 
-image:https://img.shields.io/badge/RSR-Certified-gold[RSR Certified]
-image:https://img.shields.io/badge/License-AGPL%20v3-blue[License]
+betlang is a Domain-Specific Language (DSL) for probabilistic programming built on Racket. Its core primitive is the ternary bet - a choice between three values with associated probabilities. This simple yet powerful concept enables elegant expression of complex probabilistic models.
 
-toc::[]
+== Features
 
-== Overview
+=== Core Language
+- *Ternary Bets*: `(bet A B C)` - randomly select one of three values
+- *Weighted Probabilities*: `(bet/weighted '(A 5) '(B 3) '(C 2))` - non-uniform distributions
+- *Conditional Bets*: Make decisions based on predicates
+- *Lazy Evaluation*: Only compute the selected branch
+- *Composition Operators*: Chain, compose, and combine bets
+- *Statistical Utilities*: Probability estimation, entropy, expected values
 
-betlang is part of the link:https://rhodium.sh[Rhodium Standard] (RSR) ecosystem.
+=== Rich Standard Library
 
-Domain: *software-development*
+==== Statistics (`lib/statistics.rkt`)
+- Descriptive statistics: mean, median, mode, variance, standard deviation
+- Correlation and covariance analysis
+- Statistical tests: chi-square, Kolmogorov-Smirnov
+- Resampling methods: bootstrap, jackknife
+- Time series: moving averages, exponential smoothing
+- Monte Carlo simulation utilities
 
-== Installation
+==== Probability Distributions (`lib/distributions.rkt`)
+- *Discrete*: uniform, Bernoulli, binomial, geometric, Poisson, categorical, multinomial
+- *Continuous*: normal, exponential, gamma, beta, chi-square, Student's t
+- *Advanced*: Weibull, Pareto, Cauchy, Laplace, Dirichlet
+- *Stochastic Processes*: random walks, Brownian motion, Lévy flights
 
-[source,bash]
-----
-# Clone from GitHub (primary)
-git clone {url-github}
+==== Bayesian Inference (`lib/bayesian.rkt`)
+- Conjugate priors (Beta-Binomial, Normal-Normal)
+- MCMC: Metropolis-Hastings, Gibbs sampling
+- Importance sampling and rejection sampling
+- Approximate Bayesian Computation (ABC)
+- Credible intervals and Bayes factors
+- Posterior predictive distributions
 
-# Or from mirrors
-git clone {url-gitlab}
-git clone {url-codeberg}
-----
+==== Optimization (`lib/optimization.rkt`)
+- Simulated annealing
+- Genetic algorithms
+- Particle swarm optimization
+- Evolutionary strategies
+- Cross-entropy method
+- Hill climbing and random search
+- Ternary search
 
-== RSR Stack
+==== Advanced Sampling (`lib/sampling.rkt`)
+- Stratified sampling
+- Latin hypercube sampling
+- Quasi-random sequences (Sobol, Halton)
+- Sequential Monte Carlo (particle filters)
+- Hamiltonian Monte Carlo
+- Slice sampling
+- Variance reduction techniques
 
-This project follows RSR conventions:
+==== Markov Chains (`lib/markov.rkt`)
+- Discrete-time Markov chains
+- Transition matrix learning
+- Stationary distribution estimation
+- Hidden Markov Models (Viterbi)
+- Text generation with Markov chains
 
-* ✅ ReScript for frontend/logic
-* ✅ Deno for JS runtime
-* ✅ WASM for performance-critical code
-* ✅ Rust/OCaml/Haskell for systems/proofs
-* ✅ Guile/Scheme for configuration
-* ❌ No TypeScript
-* ❌ No Go
-* ❌ No npm
+==== Combinators (`lib/combinators.rkt`)
+- Monadic operations: pure, bind, join
+- Error handling: try, retry, fallback
+- Performance: memoization, caching, throttling
+- Logical operations: and, or, xor
+- Advanced composition patterns
 
-== Mirrors
+==== Ternary Logic (`lib/ternary.rkt`)
+- Kleene's three-valued logic
+- Ternary operations: AND, OR, NOT, XOR
+- Majority voting and consensus
+- Higher-order functions for ternary values
+- Truth table generation
 
-[cols="1,2"]
-|===
-| Platform | URL
+=== Tools
 
-| GitHub (primary) | {url-github}
-| GitLab | {url-gitlab}
-| Bitbucket | {url-bitbucket}
-| Codeberg | {url-codeberg}
-|===
+==== Interactive REPL (`repl/shell.rkt`)
+- Comprehensive help system (`:help`)
+- Session statistics tracking (`:stats`)
+- Command history (`:history`)
+- Built-in examples (`:examples`)
+- Error handling and pretty-printing
+- Persistent logging
 
-== License
+==== Analysis Tools (`tools/analyzer.rkt`)
+- Comprehensive bet analysis
+- Strategy comparison
+- Convergence analysis
+- Text-based histograms
+- Probability reports
+- Entropy analysis over time
 
-Licensed under AGPL-3.0-or-later OR LicenseRef-Palimpsest-0.5.
+==== Benchmarks (`benchmarks/performance.rkt`)
+- 15 comprehensive performance tests
+- Core operations benchmarking
+- Distribution sampling performance
+- Statistical function benchmarks
 
-See link:LICENSE[LICENSE] for details.
+=== Examples
+
+==== Financial Modeling (`examples/finance.rkt`)
+- Stock price simulation (GBM)
+- Option pricing (Black-Scholes Monte Carlo)
+- Value at Risk (VaR) calculation
+- Credit risk modeling
+- Interest rate simulation
+- Portfolio optimization
+- Bond pricing
+- Market crash scenarios
+- 10+ complete examples
+
+==== Monte Carlo Simulations (`examples/monte-carlo.rkt`)
+- Pi estimation
+- Buffon's needle
+- Monte Carlo integration
+- European option pricing
+- Random walk analysis
+- Percolation simulation
+- Variance reduction techniques
+
+==== Game Theory (`examples/game-theory.rkt`)
+- Rock-paper-scissors tournaments
+- Prisoner's dilemma
+- Matching pennies
+- Battle of the sexes
+- Hawk-dove evolutionary dynamics
+- All-pay auctions
+
+==== Probabilistic Data Structures (`examples/probabilistic-structures.rkt`)
+- Skip lists
+- Bloom filters
+- HyperLogLog cardinality estimation
+- Count-Min sketch
+- Reservoir sampling
+- Cuckoo hashing
+- Treaps
+
+==== Basic Tutorial (`examples/basic-tutorial.rkt`)
+- Step-by-step introduction
+- Real-world examples
+- Customer service simulation
+
+== Quick Start
+
+=== Installation
+
+```bash
+git clone https://github.com/yourusername/betlang.git
+cd betlang
+```
+
+=== Your First Bet
+
+Start the REPL:
+```bash
+racket repl/shell.rkt
+```
+
+Try some bets:
+```racket
+betlang> (bet 1 2 3)
+2
+
+betlang> (bet 'heads 'tails 'edge)
+heads
+
+betlang> (bet/weighted '(common 7) '(uncommon 2) '(rare 1))
+common
+
+betlang> (bet-parallel 10 'win 'draw 'lose)
+(win lose win draw win win lose draw win win)
+```
+
+=== Run Examples
+
+```bash
+= Financial modeling
+racket examples/finance.rkt
+
+= Monte Carlo simulations
+racket examples/monte-carlo.rkt
+
+= Game theory
+racket examples/game-theory.rkt
+
+= Tutorial
+racket examples/basic-tutorial.rkt
+```
+
+=== Run Tests
+
+```bash
+racket tests/basics.rkt
+```
+
+=== Performance Benchmarks
+
+```bash
+racket benchmarks/performance.rkt
+```
+
+== Documentation
+
+- *[Tutorial](docs/tutorial.md)* - Comprehensive tutorial from basics to advanced
+- *[Semantics](docs/semantics.md)* - Formal language semantics
+- *[API Reference](docs/api-reference.md)* - Complete API documentation
+- *[Architecture](docs/architecture.md)* - Project structure
+- *[CLAUDE.md](CLAUDE.md)* - AI assistant context
+
+== Language Philosophy
+
+betlang embraces the ternary principle - fundamental operations involve three choices. This design:
+
+- Models three-way decisions naturally (win/draw/lose, yes/no/maybe)
+- Provides richer expressiveness than binary choices
+- Creates interesting emergent probabilistic properties
+- Inspired by musical ternary form (A-B-A)
+
+== Use Cases
+
+- *Quantitative Finance*: Option pricing, risk analysis, portfolio optimization
+- *Statistical Modeling*: Bayesian inference, hypothesis testing
+- *Machine Learning*: Probabilistic classification, sampling methods
+- *Simulation*: Monte Carlo methods, agent-based modeling
+- *Game Theory*: Strategic decision-making, evolutionary dynamics
+- *Data Science*: Resampling, bootstrapping, statistical analysis
+- *Research*: Probabilistic programming, stochastic processes
+
+== Project Statistics
+
+- *Lines of Code*: 6,000+
+- *Libraries*: 10+
+- *Functions*: 180+
+- *Examples*: 8 comprehensive example files
+- *Documentation*: 2,000+ lines
+- *Test Cases*: 25+
+
+== Requirements
+
+- Racket 7.0 or later
 
 == Contributing
 
-See link:CONTRIBUTING.adoc[CONTRIBUTING.adoc].
+Contributions are welcome! Please ensure:
+- Code follows Racket conventions
+- New features align with ternary philosophy
+- Tests are included
+- Documentation is updated
 
-== Metadata
+== License
 
-* Domain: software-development
-* Framework: RSR (Rhodium Standard Repository)
-* Dublin Core: link:.well-known/dc.xml[.well-known/dc.xml]
+See LICENSE file for details.
+
+== Citation
+
+If you use betlang in research, please cite:
+
+```bibtex
+@software{betlang2025,
+  title={betlang: A Ternary Probabilistic Programming Language},
+  author={betlang Contributors},
+  year={2025},
+  url={https://github.com/yourusername/betlang}
+}
+```
+
+== Acknowledgments
+
+Inspired by:
+- Musical ternary form (A-B-A)
+- Probabilistic programming languages
+- Racket's expressiveness
+- Three-valued logic systems
+
+---
+
+*Happy betting!* 🎲
+
+For questions, issues, or discussions, please open an issue on GitHub.
