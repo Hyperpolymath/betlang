@@ -1,55 +1,79 @@
-# Racket compiled files
-compiled/
-*.zo
-*.so
-*.dylib
-*.dll
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# RSR-compliant .gitignore
 
-# Racket backup files
-*~
-*.bak
-*.bak.*
-
-# Editor files
+# OS & Editor
 .DS_Store
+Thumbs.db
 *.swp
 *.swo
 *~
-.#*
-\#*\#
-.*.swp
-.*.swo
-
-# IDE files
-.vscode/
 .idea/
-*.sublime-project
-*.sublime-workspace
+.vscode/
+
+# Build
+/target/
+/_build/
+/build/
+/dist/
+/out/
+
+# Dependencies
+/node_modules/
+/vendor/
+/deps/
+/.elixir_ls/
+
+# Rust
+# Cargo.lock  # Keep for binaries
+
+# Elixir
+/cover/
+/doc/
+*.ez
+erl_crash.dump
+
+# Julia
+*.jl.cov
+*.jl.mem
+/Manifest.toml
+
+# ReScript
+/lib/bs/
+/.bsb.lock
+
+# Python (SaltStack only)
+__pycache__/
+*.py[cod]
+.venv/
+
+# Ada/SPARK
+*.ali
+/obj/
+/bin/
+
+# Haskell
+/.stack-work/
+/dist-newstyle/
+
+# Chapel
+*.chpl.tmp.*
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+secrets/
+
+# Test/Coverage
+/coverage/
+htmlcov/
 
 # Logs
 *.log
-logs/
-*.txt
+/logs/
 
-# OS files
-Thumbs.db
-desktop.ini
-
-# Build artifacts
-/doc/
-build/
-dist/
-
-# Package manager
-.bundle/
-vendor/
-
-# Testing
-coverage/
-*.cover
-htmlcov/
-
-# Temporary files
-tmp/
-temp/
+# Temp
+/tmp/
 *.tmp
+*.bak
