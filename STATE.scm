@@ -12,10 +12,10 @@
 ;;;============================================================================
 
 (define metadata
-  '((version . "0.1.0")
+  '((version . "0.1.1")
     (schema-version . "1.0")
     (created . "2025-12-15")
-    (updated . "2025-12-15")
+    (updated . "2025-12-18")
     (project . "betlang")
     (repo . "github.com/hyperpolymath/betlang")))
 
@@ -40,35 +40,43 @@
 ;;;============================================================================
 
 (define current-position
-  '((phase . "v0.1 - Initial Setup and RSR Compliance")
-    (overall-completion . 25)
+  '((phase . "v0.1.1 - Security Hardening Complete")
+    (overall-completion . 40)
 
     (components
      ((rsr-compliance
        ((status . "complete")
         (completion . 100)
-        (notes . "SHA-pinned actions, SPDX headers, multi-platform CI")))
+        (notes . "All workflows SHA-pinned, SPDX headers, permissions declared")))
+
+      (security
+       ((status . "complete")
+        (completion . 100)
+        (notes . "All GitHub Actions SHA-pinned, removed @main refs, permissions: read-all")))
 
       (documentation
        ((status . "foundation")
-        (completion . 30)
-        (notes . "README exists, META/ECOSYSTEM/STATE.scm added")))
+        (completion . 35)
+        (notes . "README, META/ECOSYSTEM/STATE.scm, SECURITY.md complete")))
 
       (testing
-       ((status . "minimal")
-        (completion . 10)
-        (notes . "CI/CD scaffolding exists, limited test coverage")))
+       ((status . "scaffolded")
+        (completion . 15)
+        (notes . "CI/CD pipeline configured, cross-platform test matrix")))
 
       (core-functionality
        ((status . "in-progress")
         (completion . 25)
-        (notes . "Initial implementation underway")))))
+        (notes . "bet primitives, ternary logic, REPL implemented")))))
 
     (working-features
      ("RSR-compliant CI/CD pipeline"
       "Multi-platform mirroring (GitHub, GitLab, Bitbucket)"
       "SPDX license headers on all files"
-      "SHA-pinned GitHub Actions"))))
+      "SHA-pinned GitHub Actions (all workflows)"
+      "OSSF Scorecard integration"
+      "Security policy workflows"
+      "Cross-platform Racket testing (8.11, 8.12, current)"))))
 
 ;;;============================================================================
 ;;; ROUTE TO MVP
@@ -79,13 +87,35 @@
     (definition . "Stable release with comprehensive documentation and tests")
 
     (milestones
-     ((v0.2
+     ((v0.1.1
+       ((name . "Security Hardening")
+        (status . "complete")
+        (completed . "2025-12-18")
+        (items
+         ("SHA-pin all GitHub Actions"
+          "Add SPDX headers to all workflows"
+          "Add permissions: read-all declarations"
+          "Remove @main branch references"
+          "Update STATE.scm roadmap"))))
+
+      (v0.2
        ((name . "Core Functionality")
+        (status . "in-progress")
+        (items
+         ("Extend bet primitive with weighted probabilities"
+          "Add bet-parallel for concurrent sampling"
+          "Implement bet-conditional for conditional logic"
+          "Add statistical analysis functions"
+          "Comprehensive unit tests for core"))))
+
+      (v0.3
+       ((name . "Library Expansion")
         (status . "pending")
         (items
-         ("Implement primary features"
-          "Add comprehensive tests"
-          "Improve documentation"))))
+         ("Markov chain support"
+          "Bayesian inference primitives"
+          "Distribution sampling library"
+          "Optimization algorithms"))))
 
       (v0.5
        ((name . "Feature Complete")
@@ -93,16 +123,27 @@
         (items
          ("All planned features implemented"
           "Test coverage > 70%"
-          "API stability"))))
+          "API stability"
+          "Performance benchmarks established"))))
+
+      (v0.8
+       ((name . "Pre-Release Polish")
+        (status . "pending")
+        (items
+         ("Documentation complete"
+          "REPL enhancements"
+          "Error messages improved"
+          "Examples expanded"))))
 
       (v1.0
        ((name . "Production Release")
         (status . "pending")
         (items
-         ("Comprehensive test coverage"
+         ("Comprehensive test coverage > 80%"
           "Performance optimization"
-          "Security audit"
-          "User documentation complete"))))))))
+          "External security audit"
+          "User documentation complete"
+          "Guix package published"))))))))
 
 ;;;============================================================================
 ;;; BLOCKERS & ISSUES
@@ -133,17 +174,19 @@
 
 (define critical-next-actions
   '((immediate
-     (("Review and update documentation" . medium)
-      ("Add initial test coverage" . high)
-      ("Verify CI/CD pipeline functionality" . high)))
+     (("Verify CI/CD pipeline with SHA-pinned actions" . high)
+      ("Resolve GitLab mirror sync status" . medium)
+      ("Add unit tests for bet primitives" . high)))
 
     (this-week
-     (("Implement core features" . high)
-      ("Expand test coverage" . medium)))
+     (("Implement weighted bet probabilities" . high)
+      ("Add bet-parallel for concurrent sampling" . high)
+      ("Expand test coverage to 30%" . medium)))
 
     (this-month
-     (("Reach v0.2 milestone" . high)
-      ("Complete documentation" . medium)))))
+     (("Complete v0.2 Core Functionality milestone" . high)
+      ("Begin v0.3 Library Expansion" . medium)
+      ("Add Markov chain support" . medium)))))
 
 ;;;============================================================================
 ;;; SESSION HISTORY
@@ -151,6 +194,16 @@
 
 (define session-history
   '((snapshots
+     ((date . "2025-12-18")
+      (session . "security-hardening")
+      (accomplishments
+       ("SHA-pinned all GitHub Actions to commit hashes"
+        "Added SPDX license headers to all workflows"
+        "Added permissions: read-all to all workflows"
+        "Removed insecure @main branch references"
+        "Updated roadmap with detailed milestones"))
+      (notes . "Security audit and hardening complete"))
+
      ((date . "2025-12-15")
       (session . "initial-state-creation")
       (accomplishments
@@ -184,11 +237,12 @@
 
 (define state-summary
   '((project . "betlang")
-    (version . "0.1.0")
-    (overall-completion . 25)
+    (version . "0.1.1")
+    (overall-completion . 40)
+    (last-milestone . "v0.1.1 - Security Hardening (complete)")
     (next-milestone . "v0.2 - Core Functionality")
     (critical-blockers . 0)
     (high-priority-issues . 0)
-    (updated . "2025-12-15")))
+    (updated . "2025-12-18")))
 
 ;;; End of STATE.scm
