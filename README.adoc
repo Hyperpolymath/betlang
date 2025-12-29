@@ -1,5 +1,7 @@
 = betlang
 
+image:https://img.shields.io/badge/license-AGPL--3.0-blue.svg[AGPL-3.0,link="https://www.gnu.org/licenses/agpl-3.0"] image:https://img.shields.io/badge/philosophy-Palimpsest-purple.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-licence"]
+
 *A ternary probabilistic programming language for modeling uncertainty*
 
 betlang is a Domain-Specific Language (DSL) for probabilistic programming built on Racket. Its core primitive is the ternary bet - a choice between three values with associated probabilities. This simple yet powerful concept enables elegant expression of complex probabilistic models.
@@ -180,15 +182,23 @@ betlang> (bet-parallel 10 'win 'draw 'lose)
 
 ```bash
 = Financial modeling
+
+image:https://img.shields.io/badge/license-AGPL--3.0-blue.svg[AGPL-3.0,link="https://www.gnu.org/licenses/agpl-3.0"] image:https://img.shields.io/badge/philosophy-Palimpsest-purple.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-licence"]
 racket examples/finance.rkt
 
 = Monte Carlo simulations
+
+image:https://img.shields.io/badge/license-AGPL--3.0-blue.svg[AGPL-3.0,link="https://www.gnu.org/licenses/agpl-3.0"] image:https://img.shields.io/badge/philosophy-Palimpsest-purple.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-licence"]
 racket examples/monte-carlo.rkt
 
 = Game theory
+
+image:https://img.shields.io/badge/license-AGPL--3.0-blue.svg[AGPL-3.0,link="https://www.gnu.org/licenses/agpl-3.0"] image:https://img.shields.io/badge/philosophy-Palimpsest-purple.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-licence"]
 racket examples/game-theory.rkt
 
 = Tutorial
+
+image:https://img.shields.io/badge/license-AGPL--3.0-blue.svg[AGPL-3.0,link="https://www.gnu.org/licenses/agpl-3.0"] image:https://img.shields.io/badge/philosophy-Palimpsest-purple.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-licence"]
 racket examples/basic-tutorial.rkt
 ```
 
