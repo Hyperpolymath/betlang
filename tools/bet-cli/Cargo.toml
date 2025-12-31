@@ -1,0 +1,20 @@
+[package]
+name = "bet"
+description = "Betlang command-line interface"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "bet"
+path = "src/main.rs"
+
+[dependencies]
+bet-syntax = { path = "../../compiler/bet-syntax" }
+bet-parse = { path = "../../compiler/bet-parse" }
+
+clap.workspace = true
+rustyline.workspace = true
+miette.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true

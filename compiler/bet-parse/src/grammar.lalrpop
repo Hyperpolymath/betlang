@@ -1,0 +1,429 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+// Betlang Grammar
+
+use bet_syntax::{
+    ast::*,
+    span::{Span, Spanned},
+    Symbol,
+};
+use crate::lexer::Token;
+
+grammar;
+
+// === External Token Types ===
+
+extern {
+    type Location = usize;
+    type Error = crate::lexer::LexError;
+
+    enum Token {
+        // Keywords
+        "bet" => Token::Bet,
+        "let" => Token::Let,
+        "in" => Token::In,
+        "fun" => Token::Fun,
+        "match" => Token::Match,
+        "if" => Token::If,
+        "then" => Token::Then,
+        "else" => Token::Else,
+        "do" => Token::Do,
+        "return" => Token::Return,
+        "type" => Token::Type,
+        "module" => Token::Module,
+        "import" => Token::Import,
+        "export" => Token::Export,
+        "rec" => Token::Rec,
+        "and" => Token::And,
+        "or" => Token::Or,
+        "not" => Token::Not,
+        "xor" => Token::Xor,
+        "true" => Token::True,
+        "false" => Token::False,
+        "unknown" => Token::Unknown,
+        "sample" => Token::Sample,
+        "observe" => Token::Observe,
+        "infer" => Token::Infer,
+        "parallel" => Token::Parallel,
+        "weighted" => Token::Weighted,
+        "MCMC" => Token::MCMC,
+        "HMC" => Token::HMC,
+        "SMC" => Token::SMC,
+        "VI" => Token::VI,
+
+        // Literals
+        INT => Token::Int(<i64>),
+        FLOAT => Token::Float(<f64>),
+        STRING => Token::String(<String>),
+        IDENT => Token::Ident(<String>),
+        TYPEVAR => Token::TypeVar(<String>),
+
+        // Operators
+        "+" => Token::Plus,
+        "-" => Token::Minus,
+        "*" => Token::Star,
+        "/" => Token::Slash,
+        "%" => Token::Percent,
+        "^" => Token::Caret,
+        "==" => Token::EqEq,
+        "!=" => Token::NotEq,
+        "<" => Token::Lt,
+        "<=" => Token::Le,
+        ">" => Token::Gt,
+        ">=" => Token::Ge,
+        "&&" => Token::AndAnd,
+        "||" => Token::OrOr,
+        "++" => Token::PlusPlus,
+        "::" => Token::ColonColon,
+        ">>" => Token::GtGt,
+        "|>" => Token::Pipe,
+        "<-" => Token::LArrow,
+        "->" => Token::RArrow,
+        "=>" => Token::FatArrow,
+
+        // Delimiters
+        "(" => Token::LParen,
+        ")" => Token::RParen,
+        "[" => Token::LBracket,
+        "]" => Token::RBracket,
+        "{" => Token::LBrace,
+        "}" => Token::RBrace,
+
+        // Punctuation
+        "," => Token::Comma,
+        ";" => Token::Semi,
+        ":" => Token::Colon,
+        "." => Token::Dot,
+        "=" => Token::Eq,
+        "@" => Token::At,
+        "|" => Token::Bar,
+        "_" => Token::Underscore,
+        "?" => Token::Question,
+        "\\" => Token::Backslash,
+    }
+}
+
+// === Helper Macros ===
+
+Spanned<T>: Spanned<T> = {
+    <l:@L> <t:T> <r:@R> => Spanned::new(t, Span::new(l as u32, r as u32)),
+};
+
+Comma<T>: Vec<T> = {
+    <mut v:(<T> ",")*> <e:T?> => match e {
+        Some(e) => { v.push(e); v }
+        None => v
+    }
+};
+
+Semi<T>: Vec<T> = {
+    <mut v:(<T> ";")*> <e:T?> => match e {
+        Some(e) => { v.push(e); v }
+        None => v
+    }
+};
+
+// === Top-Level ===
+
+pub Module: Module = {
+    <l:@L> <items:Spanned<Item>*> <r:@R> => Module {
+        name: None,
+        items,
+        span: Span::new(l as u32, r as u32),
+    }
+};
+
+Item: Item = {
+    <LetDef> => Item::Let(<>),
+    <TypeDef> => Item::TypeDef(<>),
+    <Import> => Item::Import(<>),
+    <Expr> => Item::Expr(<>),
+};
+
+LetDef: LetDef = {
+    "let" <is_rec:"rec"?> <name:Spanned<Ident>> <params:Spanned<Pattern>*>
+        <type_ann:(":" <Spanned<Type>>)?> "=" <body:Spanned<Expr>> => LetDef {
+        name,
+        params,
+        type_ann,
+        body,
+        is_rec: is_rec.is_some(),
+    }
+};
+
+TypeDef: TypeDef = {
+    "type" <name:Spanned<Ident>> <params:Spanned<TypeVarIdent>*> "=" <body:Spanned<Type>> => TypeDef {
+        name: name.map(|s| Symbol::intern(&s)),
+        params: params.into_iter().map(|s| s.map(|s| Symbol::intern(&s))).collect(),
+        body,
+    }
+};
+
+Import: Import = {
+    "import" <path:Spanned<Ident>+> => Import {
+        path: path.into_iter().map(|s| s.map(|s| Symbol::intern(&s))).collect(),
+        items: None,
+    },
+    "import" <path:Spanned<Ident>+> "." "{" <items:Comma<Spanned<Ident>>> "}" => Import {
+        path: path.into_iter().map(|s| s.map(|s| Symbol::intern(&s))).collect(),
+        items: Some(items.into_iter().map(|s| s.map(|s| Symbol::intern(&s))).collect()),
+    }
+};
+
+// === Expressions ===
+
+pub Expr: Expr = {
+    ExprOr,
+};
+
+ExprOr: Expr = {
+    <l:Spanned<ExprOr>> "||" <r:Spanned<ExprAnd>> =>
+        Expr::BinOp(BinOp::Or, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprOr>> "or" <r:Spanned<ExprAnd>> =>
+        Expr::BinOp(BinOp::Or, Box::new(l), Box::new(r)),
+    ExprAnd,
+};
+
+ExprAnd: Expr = {
+    <l:Spanned<ExprAnd>> "&&" <r:Spanned<ExprCompare>> =>
+        Expr::BinOp(BinOp::And, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprAnd>> "and" <r:Spanned<ExprCompare>> =>
+        Expr::BinOp(BinOp::And, Box::new(l), Box::new(r)),
+    ExprCompare,
+};
+
+ExprCompare: Expr = {
+    <l:Spanned<ExprCompare>> "==" <r:Spanned<ExprAdd>> =>
+        Expr::BinOp(BinOp::Eq, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprCompare>> "!=" <r:Spanned<ExprAdd>> =>
+        Expr::BinOp(BinOp::Ne, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprCompare>> "<" <r:Spanned<ExprAdd>> =>
+        Expr::BinOp(BinOp::Lt, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprCompare>> "<=" <r:Spanned<ExprAdd>> =>
+        Expr::BinOp(BinOp::Le, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprCompare>> ">" <r:Spanned<ExprAdd>> =>
+        Expr::BinOp(BinOp::Gt, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprCompare>> ">=" <r:Spanned<ExprAdd>> =>
+        Expr::BinOp(BinOp::Ge, Box::new(l), Box::new(r)),
+    ExprAdd,
+};
+
+ExprAdd: Expr = {
+    <l:Spanned<ExprAdd>> "+" <r:Spanned<ExprMul>> =>
+        Expr::BinOp(BinOp::Add, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprAdd>> "-" <r:Spanned<ExprMul>> =>
+        Expr::BinOp(BinOp::Sub, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprAdd>> "++" <r:Spanned<ExprMul>> =>
+        Expr::BinOp(BinOp::Concat, Box::new(l), Box::new(r)),
+    ExprMul,
+};
+
+ExprMul: Expr = {
+    <l:Spanned<ExprMul>> "*" <r:Spanned<ExprUnary>> =>
+        Expr::BinOp(BinOp::Mul, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprMul>> "/" <r:Spanned<ExprUnary>> =>
+        Expr::BinOp(BinOp::Div, Box::new(l), Box::new(r)),
+    <l:Spanned<ExprMul>> "%" <r:Spanned<ExprUnary>> =>
+        Expr::BinOp(BinOp::Mod, Box::new(l), Box::new(r)),
+    ExprUnary,
+};
+
+ExprUnary: Expr = {
+    "-" <e:Spanned<ExprUnary>> => Expr::UnOp(UnOp::Neg, Box::new(e)),
+    "not" <e:Spanned<ExprUnary>> => Expr::UnOp(UnOp::Not, Box::new(e)),
+    "sample" <e:Spanned<ExprApp>> => Expr::Sample(Box::new(e)),
+    ExprApp,
+};
+
+ExprApp: Expr = {
+    <f:Spanned<ExprApp>> <arg:Spanned<ExprAtom>> =>
+        Expr::App(Box::new(f), vec![arg]),
+    ExprAtom,
+};
+
+ExprAtom: Expr = {
+    // Literals
+    <n:INT> => Expr::Int(n),
+    <n:FLOAT> => Expr::Float(n),
+    <s:STRING> => Expr::String(s),
+    "true" => Expr::Ternary(TernaryValue::True),
+    "false" => Expr::Ternary(TernaryValue::False),
+    "unknown" => Expr::Ternary(TernaryValue::Unknown),
+    "()" => Expr::Unit,
+
+    // Variable
+    <s:IDENT> => Expr::Var(Symbol::intern(&s)),
+
+    // Bet expressions
+    "bet" "{" <a:Spanned<Expr>> "," <b:Spanned<Expr>> "," <c:Spanned<Expr>> "}" =>
+        Expr::Bet(BetExpr {
+            alternatives: [Box::new(a), Box::new(b), Box::new(c)],
+        }),
+
+    // Weighted bet
+    "bet" "{" <a:Spanned<Expr>> "@" <wa:Spanned<Expr>> ","
+               <b:Spanned<Expr>> "@" <wb:Spanned<Expr>> ","
+               <c:Spanned<Expr>> "@" <wc:Spanned<Expr>> "}" =>
+        Expr::WeightedBet(WeightedBetExpr {
+            alternatives: [
+                (Box::new(a), Box::new(wa)),
+                (Box::new(b), Box::new(wb)),
+                (Box::new(c), Box::new(wc)),
+            ],
+        }),
+
+    // Lambda
+    "fun" <params:Spanned<Pattern>+> "->" <body:Spanned<Expr>> =>
+        Expr::Lambda(LambdaExpr {
+            params,
+            body: Box::new(body),
+        }),
+
+    // Let
+    "let" <is_rec:"rec"?> <pat:Spanned<Pattern>> <type_ann:(":" <Spanned<Type>>)?> "=" <val:Spanned<Expr>> "in" <body:Spanned<Expr>> =>
+        Expr::Let(LetExpr {
+            pattern: pat,
+            type_ann,
+            value: Box::new(val),
+            body: Box::new(body),
+            is_rec: is_rec.is_some(),
+        }),
+
+    // If
+    "if" <cond:Spanned<Expr>> "then" <then_br:Spanned<Expr>> "else" <else_br:Spanned<Expr>> =>
+        Expr::If(IfExpr {
+            condition: Box::new(cond),
+            then_branch: Box::new(then_br),
+            else_branch: Box::new(else_br),
+        }),
+
+    // Match
+    "match" <scrutinee:Spanned<Expr>> "{" <arms:Comma<MatchArm>> "}" =>
+        Expr::Match(MatchExpr {
+            scrutinee: Box::new(scrutinee),
+            arms,
+        }),
+
+    // Do notation
+    "do" "{" <stmts:Semi<Spanned<DoStatement>>> "}" =>
+        Expr::Do(DoExpr { statements: stmts }),
+
+    // Parallel
+    "parallel" <n:Spanned<ExprAtom>> "{" <body:Spanned<Expr>> "}" =>
+        Expr::Parallel(Box::new(n), Box::new(body)),
+
+    // Tuple
+    "(" <first:Expr> "," <rest:Comma<Spanned<Expr>>> ")" => {
+        let mut elems = vec![Spanned::dummy(first)];
+        elems.extend(rest);
+        Expr::Tuple(elems)
+    },
+
+    // List
+    "[" <elems:Comma<Spanned<Expr>>> "]" => Expr::List(elems),
+
+    // Record
+    "{" <fields:Comma<RecordField>> "}" => Expr::Record(fields),
+
+    // Parenthesized / type annotation
+    "(" <e:Expr> ")" => e,
+    "(" <e:Spanned<Expr>> ":" <t:Spanned<Type>> ")" =>
+        Expr::Annotate(Box::new(e), t),
+
+    // Hole
+    "_" => Expr::Hole(None),
+    "?" <name:IDENT> => Expr::Hole(Some(Symbol::intern(&name))),
+};
+
+RecordField: (Spanned<Symbol>, Spanned<Expr>) = {
+    <name:Spanned<Ident>> "=" <val:Spanned<Expr>> =>
+        (name.map(|s| Symbol::intern(&s)), val),
+};
+
+MatchArm: MatchArm = {
+    <pat:Spanned<Pattern>> <guard:("if" <Spanned<Expr>>)?> "->" <body:Spanned<Expr>> =>
+        MatchArm { pattern: pat, guard, body },
+};
+
+DoStatement: DoStatement = {
+    <pat:Spanned<Pattern>> "<-" <e:Spanned<Expr>> =>
+        DoStatement::Bind(pat, e),
+    "let" <pat:Spanned<Pattern>> "=" <e:Spanned<Expr>> =>
+        DoStatement::Let(pat, e),
+    <e:Spanned<Expr>> => DoStatement::Expr(e),
+};
+
+// === Patterns ===
+
+pub Pattern: Pattern = {
+    PatternOr,
+};
+
+PatternOr: Pattern = {
+    <a:Spanned<PatternAtom>> "|" <b:Spanned<PatternAtom>> "|" <c:Spanned<PatternAtom>> =>
+        Pattern::Or(Box::new(a), Box::new(b), Box::new(c)),
+    PatternAtom,
+};
+
+PatternAtom: Pattern = {
+    "_" => Pattern::Wildcard,
+    <s:IDENT> => Pattern::Var(Symbol::intern(&s)),
+    <n:INT> => Pattern::Literal(Literal::Int(n)),
+    <n:FLOAT> => Pattern::Literal(Literal::Float(n)),
+    <s:STRING> => Pattern::Literal(Literal::String(s)),
+    "true" => Pattern::Literal(Literal::Ternary(TernaryValue::True)),
+    "false" => Pattern::Literal(Literal::Ternary(TernaryValue::False)),
+    "unknown" => Pattern::Literal(Literal::Ternary(TernaryValue::Unknown)),
+    "()" => Pattern::Literal(Literal::Unit),
+    "(" <first:Pattern> "," <rest:Comma<Spanned<Pattern>>> ")" => {
+        let mut elems = vec![Spanned::dummy(first)];
+        elems.extend(rest);
+        Pattern::Tuple(elems)
+    },
+    "[" <elems:Comma<Spanned<Pattern>>> "]" => Pattern::List(elems, None),
+    "(" <p:Pattern> ")" => p,
+};
+
+// === Types ===
+
+pub Type: Type = {
+    TypeArrow,
+};
+
+TypeArrow: Type = {
+    <arg:Spanned<TypeApp>> "->" <ret:Spanned<TypeArrow>> =>
+        Type::Arrow(Box::new(arg), Box::new(ret)),
+    TypeApp,
+};
+
+TypeApp: Type = {
+    <f:Spanned<TypeApp>> <arg:Spanned<TypeAtom>> =>
+        Type::App(Box::new(f), vec![arg]),
+    TypeAtom,
+};
+
+TypeAtom: Type = {
+    <s:IDENT> => Type::Named(Symbol::intern(&s)),
+    <s:TYPEVAR> => Type::Var(Symbol::intern(&s)),
+    "(" <t:Type> ")" => t,
+    "(" <first:Type> "," <rest:Comma<Spanned<Type>>> ")" => {
+        let mut elems = vec![Spanned::dummy(first)];
+        elems.extend(rest);
+        Type::Tuple(elems)
+    },
+    "{" <fields:Comma<RecordTypeField>> "}" => Type::Record(fields),
+    "_" => Type::Hole,
+};
+
+RecordTypeField: (Symbol, Spanned<Type>) = {
+    <name:IDENT> ":" <ty:Spanned<Type>> => (Symbol::intern(&name), ty),
+};
+
+// === Helpers ===
+
+Ident: String = {
+    <s:IDENT> => s,
+};
+
+TypeVarIdent: String = {
+    <s:TYPEVAR> => s,
+};
