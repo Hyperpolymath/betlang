@@ -12,9 +12,14 @@ members = [
     # Runtime
     "runtime/bet-rt",
     "runtime/bet-rand",
+    "runtime/bet-viz",
 
     # Tools
     "tools/bet-cli",
+
+    # Bindings
+    "bindings/chapel",
+    "bindings/julia",
 ]
 
 [workspace.package]
