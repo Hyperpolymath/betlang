@@ -190,6 +190,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **MINOR**: Backward-compatible functionality
 - **PATCH**: Backward-compatible bug fixes
 
-[unreleased]: https://github.com/yourusername/betlang/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/yourusername/betlang/releases/tag/v0.1.0
-[0.0.1]: https://github.com/yourusername/betlang/releases/tag/v0.0.1
+[unreleased]: https://github.com/hyperpolymath/betlang/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/hyperpolymath/betlang/releases/tag/v0.1.0
+[0.0.1]: https://github.com/hyperpolymath/betlang/releases/tag/v0.0.1

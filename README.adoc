@@ -152,7 +152,7 @@ betlang is a Domain-Specific Language (DSL) for probabilistic programming built 
 === Installation
 
 ```bash
-git clone https://github.com/yourusername/betlang.git
+git clone https://github.com/hyperpolymath/betlang.git
 cd betlang
 ```
 
@@ -275,7 +275,7 @@ If you use betlang in research, please cite:
   title={betlang: A Ternary Probabilistic Programming Language},
   author={betlang Contributors},
   year={2025},
-  url={https://github.com/yourusername/betlang}
+  url={https://github.com/hyperpolymath/betlang}
 }
 ```
 
