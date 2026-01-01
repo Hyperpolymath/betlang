@@ -1,3 +1,11 @@
+# ============================================================================
+# OPTIONAL TOOLING - NOT AUTHORITATIVE
+# ============================================================================
+# These Rust components are optional tooling that do NOT define betlang
+# semantics. The authoritative implementation is core/betlang.rkt (Racket).
+# See SPEC.core.scm for formal semantics and TOOLING.md for details.
+# ============================================================================
+
 [workspace]
 resolver = "2"
 members = [

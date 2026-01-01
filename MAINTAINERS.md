@@ -100,7 +100,7 @@ Maintainers who have stepped down but contributed significantly:
 
 ## Contact
 
-**General inquiries:** Open an [issue](https://github.com/yourusername/betlang/issues)
+**General inquiries:** Open an [issue](https://github.com/hyperpolymath/betlang/issues)
 
 **Security reports:** See [SECURITY.md](SECURITY.md)
 

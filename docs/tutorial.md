@@ -37,7 +37,7 @@ Most probabilistic languages focus on binary choices. Betlang's ternary approach
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/betlang.git
+git clone https://github.com/hyperpolymath/betlang.git
 cd betlang
 ```
 
