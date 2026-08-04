@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MPL-2.0
+# This workflow is managed by gh actions-lock.
 # Machine-check BetLang's formal proofs on every push/PR.
 # See docs/AFFINESCRIPT-ALIGNMENT.adoc (Phase 1).
 name: Proofs
@@ -21,7 +22,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
       - name: Scan proof sources
         run: bash tools/proof-scan.sh .
 
@@ -33,7 +34,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
       - name: Install elan (Lean toolchain manager)
         run: |
           set -euo pipefail
