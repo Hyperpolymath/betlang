@@ -66,7 +66,7 @@ trusted-base-reduction policy and must be registered in
 Template ABI removed — was creating a false impression of formal
 verification. The removed files (`Types.idr`, `Layout.idr`,
 `Foreign.idr`) contained only RSR template scaffolding with unresolved
-`{{PROJECT}}`/`{{AUTHOR}}` placeholders and no domain-specific proofs.
+`BETLANG`/`Jonathan D.A. Jewell` placeholders and no domain-specific proofs.
 
 When this project needs formal ABI verification (obligations **ABI-1..5**
 above, Phase 3), create domain-specific Idris2 proofs following the
