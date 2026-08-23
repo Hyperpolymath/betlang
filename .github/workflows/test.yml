@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v7.0.1
 
       - name: Setup Racket
-        uses: Bogdanp/setup-racket@v1.9.1
+        uses: Bogdanp/setup-racket@v1.15
         with:
           version: ${{ matrix.racket-version }}
           # rackunit ships with the full Racket distribution (already present
@@ -80,7 +80,7 @@ jobs:
         uses: actions/checkout@v7.0.1
 
       - name: Setup Racket
-        uses: Bogdanp/setup-racket@v1.9.1
+        uses: Bogdanp/setup-racket@v1.15
         with:
           version: 'current'
 
