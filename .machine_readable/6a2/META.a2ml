@@ -34,12 +34,12 @@ status = "accepted"
 rationale = "Upstream echo-types Agda repo defines Echo f y := Σ(x:A), f x ≡ y. BetLang is non-dependent; adds unary Echo T / EchoR T. Distinctness (unify(Echo T, T) fails) is the entire point of retained loss. Ghost/erased at runtime until operations demand payload."
 reference = "docs/echo-types.adoc, spec/SPEC.core.scm#echo-types"
 
-# ADR-004: AffineScript replaces TypeScript/ReScript for editor tooling
+# ADR-004: AffineScript replaces TypeScript/AffineScript for editor tooling
 [[architecture-decisions.records]]
 id = "ADR-004"
-title = "AffineScript (not TypeScript or ReScript) for VS Code extension source"
+title = "AffineScript (not TypeScript or AffineScript) for VS Code extension source"
 status = "accepted"
-rationale = "Hyperpolymath language policy: no new TypeScript. ReScript was the previous choice (now deleted). AffineScript is the canonical replacement. Playground TypeScript files are an approved time-limited exemption."
+rationale = "Hyperpolymath language policy: no new TypeScript. AffineScript was the previous choice (now deleted). AffineScript is the canonical replacement. Playground TypeScript files are an approved time-limited exemption."
 reference = ".claude/CLAUDE.md TypeScript Exemptions table"
 
 # ADR-005: Three-PR AffineScript alignment strategy
@@ -63,7 +63,7 @@ documentation = "AsciiDoc (primary) + Markdown (secondary)"
 build-tool = "just (Justfile)"
 proof-build = "lake (lakefile.lean)"
 ci = "GitHub Actions (SHA-pinned)"
-package-management = "Guix (primary) / Nix (fallback) / Deno (JS)"
+package-management = "Guix (primary) / Guix (fallback) / Deno (JS)"
 
 [maintenance-axes]
 scoping-first = true

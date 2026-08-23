@@ -103,7 +103,7 @@ just proof-check-all
 
 - **No TypeScript** outside `playground/` (approved sandbox exemption, see `.claude/CLAUDE.md`)
 - **No Python, Go, Java, Kotlin, Swift** — see full policy in `.claude/CLAUDE.md`
-- **AffineScript** replaces TypeScript/ReScript for editor tooling
+- **AffineScript** replaces TypeScript/AffineScript for editor tooling
 - **Deno** replaces Node/npm
 - All files must have SPDX `MPL-2.0` headers
 

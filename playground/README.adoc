@@ -39,13 +39,13 @@ playground/
 ├── config.ncl                 # Nickel-based project configuration
 ├── deno.json                  # Deno runtime configuration
 ├── mustfile.toml              # Must framework configuration (RSR compliance)
-├── rescript.json              # ReScript project configuration
+├── affinescript.json              # AffineScript project configuration
 ├── docs/
 │   ├── .gitkeep
 │   └── CITATIONS.adoc          # Academic references
 ├── examples/
 │   ├── 01_experiment.bet      # Experimental Betlang code
-│   ├── SafeDOMExample.res     # ReScript DOM example
+│   ├── SafeDOMExample.res     # AffineScript DOM example
 │   └── web-project-deno.json  # Deno web project config
 ├── ffi/
 │   └── zig/
@@ -186,7 +186,7 @@ syntax_variant B:
 
 === SafeDOMExample.res
 
-ReScript example demonstrating formally verified DOM mounting:
+AffineScript example demonstrating formally verified DOM mounting:
 
 * Type-safe DOM manipulation
 * Error handling with proofs
@@ -195,10 +195,10 @@ ReScript example demonstrating formally verified DOM mounting:
 
 === web-project-deno.json
 
-Example Deno configuration for ReScript web projects:
+Example Deno configuration for AffineScript web projects:
 
 * Deno task definitions
-* ReScript dependency management
+* AffineScript dependency management
 * Safe DOM library integration
 
 == Shareable URLs & Ecosystem Integration

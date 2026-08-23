@@ -111,7 +111,7 @@ rsr-check:
     @test -f CONTRIBUTING.adoc && echo "  ✓ CONTRIBUTING.adoc" || echo "  ✗ CONTRIBUTING.adoc"
     @test -f CHANGELOG.md && echo "  ✓ CHANGELOG.md" || echo "  ✗ CHANGELOG.md"
     @test -f deno.json && echo "  ✓ deno.json (Deno runtime)" || echo "  ✗ deno.json"
-    @test -f rescript.json && echo "  ✓ rescript.json (ReScript)" || echo "  ✗ rescript.json"
+    @test -f affinescript.json && echo "  ✓ affinescript.json (AffineScript)" || echo "  ✗ affinescript.json"
     @test -f Mustfile && echo "  ✓ Mustfile" || echo "  ✗ Mustfile"
     @test -d .well-known && echo "  ✓ .well-known/" || echo "  ✗ .well-known/"
     @echo ""

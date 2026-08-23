@@ -26,7 +26,7 @@ maturity = "experimental"  # experimental | alpha | beta | production | lts
 # Session 2026-06-02: AffineScript alignment, governance cleanup, Echo types
 # PR #53: Lean 4 proof infrastructure (lakefile, proofs.yml, verification/, PROOF-STATUS.md)
 # PR #54: Governance/CI debt — Cargo.toml license, rackunit conflict, timeout-minutes,
-#          .governance-allowlist, .hypatia-ignore, delete Java, ReScript → AffineScript
+#          .governance-allowlist, .hypatia-ignore, delete Java, AffineScript → AffineScript
 # PR #55: Echo T / EchoR T type formers in Rust checker + Lean + spec + docs
 # PR #56: Echo operations typed — echo / echo_output / echo_map / echo_duplicate /
 #          echo_to_residue / sample_echo (functor + comonad surface; type-level/ghost).
@@ -72,7 +72,7 @@ actions = [
 primary = "Racket"          # core semantics
 proofs = "Lean 4"           # mechanised safety proofs
 compiler-tooling = "Rust"   # bet-core, bet-check, bet-parse, bet-wasm (paused)
-editor-tooling = "AffineScript"  # replaces TypeScript/ReScript in editors/
+editor-tooling = "AffineScript"  # replaces TypeScript/AffineScript in editors/
 compute-backend = "Julia"   # numerical/statistical kernel
 scripts = "Bash/POSIX shell + Just"
 config = "Nickel / 6a2 Scheme (.a2ml)"

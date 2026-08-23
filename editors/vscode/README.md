@@ -17,7 +17,7 @@ ternary probabilistic programming language.
 
 The extension is written in **AffineScript** (`src/extension.affine`), per the
 hyperpolymath language policy under which AffineScript replaces
-ReScript/TypeScript for editor tooling. It compiles to `out/extension.cjs`,
+AffineScript/TypeScript for editor tooling. It compiles to `out/extension.cjs`,
 which `package.json`'s `main` field points to:
 
 ```bash
@@ -28,7 +28,7 @@ npm run compile
 
 Requires the [AffineScript compiler](https://github.com/hyperpolymath/affinescript).
 
-> History: the previous ReScript implementation (`Extension.res` / `VSCode.res`)
+> History: the previous AffineScript implementation (`Extension.res` / `VSCode.res`)
 > was removed 2026-06-02 when the extension was migrated to AffineScript.
 
 ## Settings

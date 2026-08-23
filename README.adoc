@@ -450,7 +450,7 @@ BetLang is built on three principles:
 | Julia backend | 🟡 Active development | Primary compute kernel
 | Lean 4 proofs | ✅ Machine-checked | Progress + Preservation + monad laws
 | Rust type-checker | ✅ Active | bet-check / bet-core (incl. Echo T + operations)
-| VS Code extension | 🟡 In progress | AffineScript source (replaces ReScript)
+| VS Code extension | 🟡 In progress | AffineScript source (replaces AffineScript)
 | Web Playground (ui/) | ✅ Available | Quantum-inspired features
 | FFI (Zig) | 🟡 Experimental | playground/ffi/zig/
 | WASM backend | 🟡 Builds (scaffolding) | E0308 fixed; emits default-return stubs pending AST lowering
@@ -479,10 +479,10 @@ betlang/
 │   ├── public/                   # Static assets
 │   │   ├── index.html
 │   │   └── styles.css
-│   ├── src/                      # ReScript source
+│   ├── src/                      # AffineScript source
 │   │   └── App.res
 │   ├── deno.json
-│   ├── rescript.json
+│   ├── affinescript.json
 │   ├── vite.config.js
 │   └── Justfile
 ├── playground/                    # Experimental sandbox
@@ -492,7 +492,7 @@ betlang/
 │   ├── config.ncl
 │   ├── mustfile.toml
 │   ├── deno.json
-│   ├── rescript.json
+│   ├── affinescript.json
 │   ├── ffi/                      # FFI bindings
 │   │   └── zig/
 │   └── examples/
