@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: MPL-2.0
-// Ported via Harvard Engine mechanical processor
+// Ported via Harvard Engine (Semantic pass)
 
 module ternary_test;
 
-// TODO: Complete semantic implementation
-
-/* === ORIGINAL TYPESCRIPT CONTEXT ===
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 // SPDX-FileCopyrightText: 2025 hyperpolymath
@@ -49,7 +46,7 @@ Deno.test('implies(a,b) == or(not a, b)', () => {
 
 Deno.test('bet is lazy: only the selected branch is forced', () => {
   const forced: string[] = [];
-  const r = bet(
+  let r = bet(
     () => 'F',
     () => {
       forced.push('T');
@@ -68,4 +65,3 @@ Deno.test('bet is lazy: only the selected branch is forced', () => {
   assertEquals(forced, ['F']);
 });
 
-==================================== */
