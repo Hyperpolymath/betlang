@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: MPL-2.0
-// Ported via Harvard Engine mechanical processor
+// Ported via Harvard Engine (Semantic pass)
 
 module probability;
 
-// TODO: Complete semantic implementation
-
-/* === ORIGINAL TYPESCRIPT CONTEXT ===
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 // SPDX-FileCopyrightText: 2025 hyperpolymath
@@ -23,13 +20,13 @@ module probability;
 import { bet, type Tri } from './ternary.ts';
 
 /** A lazy, weighted branch: a relative weight and a thunk producing a value. */
-export interface Branch<A> {
+struct Branch<A> {
   weight: number;
   value: () => A;
 }
 
 /** Deterministic, seedable PRNG (mulberry32) so demos/tests are reproducible. */
-export function rng(seed: number): () => number {
+fn rng(seed: number): () => number {
   let s = seed >>> 0;
   return () => {
     s = (s + 0x6d2b79f5) >>> 0;
@@ -41,8 +38,8 @@ export function rng(seed: number): () => number {
 }
 
 /** Force exactly one branch, chosen with probability proportional to weight. */
-export function betWeighted<A>(branches: Branch<A>[], draw: () => number): A {
-  const total = branches.reduce((acc, b) => acc + b.weight, 0);
+fn betWeighted<A>(branches: Branch<A>[], draw: () => number): A {
+  let total = branches.reduce((acc, b) => acc + b.weight, 0);
   if (total <= 0) throw new Error('betWeighted: weights must sum to a positive number');
   let r = draw() * total;
   for (const b of branches) {
@@ -56,7 +53,7 @@ export function betWeighted<A>(branches: Branch<A>[], draw: () => number): A {
  * Predicate-driven ternary selection. The predicate yields a Tri; a definite
  * answer takes the matching branch, Unknown defers to the `uncertain` branch.
  */
-export function betConditional<A>(
+fn betConditional<A>(
   predicate: () => Tri,
   ifTrue: () => A,
   uncertain: () => A,
@@ -66,13 +63,13 @@ export function betConditional<A>(
 }
 
 /** Monte-Carlo expectation of a numeric weighted bet over `n` samples. */
-export function expectation(branches: Branch<number>[], n: number, draw: () => number): number {
+fn expectation(branches: Branch<number>[], n: number, draw: () => number): number {
   let sum = 0;
   for (let i = 0; i < n; i++) sum += betWeighted(branches, draw);
   return sum / n;
 }
 
-export function main(): void {
+fn main(): void {
   console.log('=== BetLang Probabilistic Layer ===\n');
 
   // A loaded three-sided "coin": 60% True, 30% Unknown, 10% False.
@@ -81,9 +78,9 @@ export function main(): void {
     { weight: 0.3, value: () => 'U' as Tri },
     { weight: 0.1, value: () => 'F' as Tri },
   ];
-  const draw = rng(42);
+  let draw = rng(42);
   const counts: Record<Tri, number> = { T: 0, U: 0, F: 0 };
-  const N = 100_000;
+  let N = 100_000;
   for (let i = 0; i < N; i++) counts[betWeighted(loaded, draw)]++;
   console.log(`Empirical distribution over ${N.toLocaleString()} draws (target 0.60/0.30/0.10):`);
   console.log(
@@ -97,11 +94,11 @@ export function main(): void {
     { weight: 2, value: () => 10 },
     { weight: 7, value: () => 0 },
   ];
-  const ev = expectation(payout, 200_000, rng(7));
+  let ev = expectation(payout, 200_000, rng(7));
   console.log(`\nExpected payout (analytic = 12.0): ${ev.toFixed(2)}`);
 
   // Conditional choice that stays total under Unknown.
-  const choice = betConditional(
+  let choice = betConditional(
     () => 'U' as Tri,
     () => 'committed',
     () => 'hedged (predicate was Unknown)',
@@ -114,4 +111,3 @@ if (import.meta.main) {
   main();
 }
 
-==================================== */

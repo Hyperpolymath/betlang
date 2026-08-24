@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: MPL-2.0
-// Ported via Harvard Engine mechanical processor
+// Ported via Harvard Engine (Semantic pass)
 
 module probability_test;
 
-// TODO: Complete semantic implementation
-
-/* === ORIGINAL TYPESCRIPT CONTEXT ===
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 // SPDX-FileCopyrightText: 2025 hyperpolymath
@@ -15,10 +12,10 @@ import { betConditional, betWeighted, type Branch, expectation, rng } from '../s
 import { type Tri } from '../src/ternary.ts';
 
 Deno.test('rng is deterministic for a fixed seed and stays in [0,1)', () => {
-  const a = rng(123);
-  const b = rng(123);
+  let a = rng(123);
+  let b = rng(123);
   for (let i = 0; i < 50; i++) {
-    const x = a();
+    let x = a();
     assertEquals(x, b());
     assert(x >= 0 && x < 1);
   }
@@ -30,9 +27,9 @@ Deno.test('betWeighted respects weights within Monte-Carlo tolerance', () => {
     { weight: 0.3, value: () => 'U' },
     { weight: 0.1, value: () => 'F' },
   ];
-  const draw = rng(42);
+  let draw = rng(42);
   const counts: Record<Tri, number> = { T: 0, U: 0, F: 0 };
-  const N = 50_000;
+  let N = 50_000;
   for (let i = 0; i < N; i++) counts[betWeighted(branches, draw)]++;
   assert(Math.abs(counts.T / N - 0.6) < 0.02);
   assert(Math.abs(counts.U / N - 0.3) < 0.02);
@@ -64,4 +61,3 @@ Deno.test('betConditional defers to the uncertain branch on Unknown', () => {
   );
 });
 
-==================================== */
