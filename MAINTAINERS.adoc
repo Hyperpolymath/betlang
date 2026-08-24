@@ -1,65 +1,150 @@
-// SPDX-License-Identifier: CC-BY-SA-4.0
-// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
-= Maintainers
-:toc: preamble
+== Maintainers
 
-== Current Maintainers
+This document lists the maintainers of the betlang project.
 
-[cols="2,3,2",options="header"]
-|===
-| Name | Role | Contact
+=== Current Maintainers
 
-| Jonathan D.A. Jewell | Sole Maintainer | https://github.com/hyperpolymath[@hyperpolymath]
-|===
+==== Lead Maintainer
 
-== Maintainer Responsibilities
+*[TO BE CONFIGURED]* - GitHub: https://github.com/username[@username] -
+Email: maintainer@betlang.org (TO BE CONFIGURED) - Role: Project lead,
+architecture decisions, releases - Timezone: UTC - Active since:
+2025-07-28
 
-As the sole maintainer, all responsibilities apply to @hyperpolymath:
+=== Maintainer Responsibilities
 
-* Reviewing and merging pull requests
-* Triaging issues and feature requests
-* Ensuring code quality and security standards
-* Managing releases and versioning
-* Upholding the project's Code of Conduct
-* Maintaining documentation and examples
-* Responding to security vulnerabilities
+Maintainers are responsible for:
 
-== Contribution Process
+[arabic]
+. *Code Review*
+* Review and merge pull requests
+* Ensure code quality and adherence to ternary philosophy
+* Verify test coverage and documentation
+. *Issue Triage*
+* Label and prioritize issues
+* Respond to bug reports
+* Guide feature discussions
+. *Release Management*
+* Create releases and tags
+* Update CHANGELOG.md
+* Announce releases
+. *Community Management*
+* Enforce Code of Conduct
+* Welcome new contributors
+* Foster inclusive community
+. *Documentation*
+* Keep documentation up-to-date
+* Review documentation PRs
+* Write tutorials and guides
+. *Security*
+* Respond to security reports
+* Coordinate security fixes
+* Publish security advisories
 
-This is a sole-maintainer project. All contributions are welcome via:
+=== Becoming a Maintainer
 
-1. **Issues**: Report bugs, request features, ask questions
-2. **Pull Requests**: Submit improvements for review
-3. **Discussions**: Engage in community discussions
+We welcome new maintainers! To become a maintainer:
 
-All contributions will be reviewed by the maintainer.
+[arabic]
+. *Consistent Contributions*
+* Regular, high-quality code contributions
+* Active participation in issues and PRs
+* Demonstrated understanding of betlang’s philosophy
+. *Community Involvement*
+* Help other contributors
+* Participate in discussions
+* Review pull requests
+. *Nomination*
+* Current maintainers nominate candidates
+* Consensus among existing maintainers
+* Public announcement of new maintainer
 
-== Decision Making
+==== Nomination Process
 
-* Routine decisions (bug fixes, minor improvements): Made by maintainer
-* Significant changes: Discussed in issues before implementation
-* Breaking changes: Announced in advance with migration path
+[arabic]
+. Current maintainer proposes candidate
+. Discussion among maintainers (1 week)
+. Consensus decision (or majority vote if needed)
+. Invite sent to candidate
+. If accepted, add to this file and grant repository access
 
-== Becoming a Maintainer
+=== Maintainer Levels
 
-This project currently has a single maintainer. If you're interested in becoming a co-maintainer:
+==== Core Maintainer
 
-1. Demonstrate consistent, high-quality contributions
-2. Show understanding of project goals and standards
-3. Participate constructively in discussions
-4. Express interest to the current maintainer
+* Full repository access
+* Can merge PRs
+* Can create releases
+* Can modify repository settings
 
-Co-maintainers may be added at the discretion of the current maintainer.
+==== Module Maintainer
 
-== Contact
+* Ownership of specific modules (e.g., `+lib/statistics.rkt+`)
+* Review PRs for owned modules
+* Expertise in specific domain
 
-For questions about project governance:
+==== Documentation Maintainer
 
-* Open a GitHub issue in this repository
-* Contact: https://github.com/hyperpolymath
+* Focus on documentation quality
+* Review documentation PRs
+* Write tutorials and guides
 
-== See Also
+=== Emeritus Maintainers
 
-* link:GOVERNANCE.adoc[Governance Model]
-* link:CODE_OF_CONDUCT.md[Code of Conduct]
-* link:CONTRIBUTING.adoc[Contributing Guide]
+Maintainers who have stepped down but contributed significantly:
+
+(None yet - project is new!)
+
+=== Contact
+
+*General inquiries:* Open an
+https://github.com/hyperpolymath/betlang/issues[issue]
+
+*Security reports:* See SECURITY.md
+
+*Code of Conduct violations:* conduct@betlang.org (TO BE CONFIGURED)
+
+*Maintainer nominations:* Contact current maintainers privately
+
+=== Decision-Making Process
+
+For major decisions:
+
+[arabic]
+. *Proposal:* Open an issue with `+[RFC]+` tag
+. *Discussion:* Allow 2 weeks for community input
+. *Decision:* Maintainers make final call
+. *Documentation:* Update relevant docs
+
+For minor decisions:
+
+* PR review process
+* Consensus among reviewers
+* Fast-track for bug fixes
+
+=== Conflict Resolution
+
+[arabic]
+. Discussion among maintainers
+. Attempt consensus
+. If consensus fails, majority vote
+. Lead maintainer has tie-breaking vote
+
+=== Inactive Maintainers
+
+Maintainers inactive for 6+ months will be contacted:
+
+* Check if they want to continue
+* Offer emeritus status if stepping down
+* Remove write access if unresponsive
+
+=== Attribution
+
+This maintainers structure is inspired by: -
+https://www.rust-lang.org/governance[Rust Project Governance] -
+https://github.com/nodejs/node/blob/main/GOVERNANCE.md[Node.js Project
+Governance] - Open source best practices
+
+'''''
+
+*Last Updated:* 2025-11-22
