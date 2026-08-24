@@ -1,0 +1,25 @@
+%A2ML
+- suppression:
+    file: 'repl/shell.rkt'
+    rule: 'CommandInjection'
+    justification: 'Expected REPL functionality for language interaction.'
+- suppression:
+    file: 'repl/shell.rkt'
+    rule: 'DynamicCodeExecution'
+    justification: 'Expected REPL functionality for evaluating user-provided language code.'
+- suppression:
+    file: 'ui/public/app.js'
+    rule: 'DynamicCodeExecution'
+    justification: 'DOM updates are controlled by internal application state, no untrusted execution.'
+- suppression:
+    file: 'verification/benchmarks/bench_lexer.rs'
+    rule: 'UnboundedAllocation'
+    justification: 'Benchmark code reading fixed local corpus files.'
+- suppression:
+    file: 'bench/bench_lexer.rs'
+    rule: 'UnboundedAllocation'
+    justification: 'Benchmark code reading fixed local corpus files.'
+- suppression:
+    file: 'tools/bet-cli/src/main.rs'
+    rule: 'UnboundedAllocation'
+    justification: 'CLI tool reading bounded user input files into memory for processing.'
