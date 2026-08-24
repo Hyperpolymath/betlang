@@ -1,0 +1,83 @@
+== Betlang Conformance Test Corpus
+
+This directory contains the canonical conformance test suite for
+betlang. Any implementation claiming conformance to betlang semantics
+MUST pass all tests in this corpus.
+
+=== Test Files
+
+==== smoke.bet
+
+Basic smoke test for REPL verification.
+
+[source,bash]
+----
+racket repl/shell.rkt < conformance/smoke.bet
+----
+
+*Success criteria:* - Program runs without errors - Output is produced
+for each expression - REPL exits cleanly on `+:quit+`
+
+==== deterministic.rkt
+
+Tests for deterministic behavior that must be identical across
+implementations.
+
+[source,bash]
+----
+racket conformance/deterministic.rkt
+----
+
+*Covers:* - Idempotent bets: `+(bet X X X) = X+` - Conditional
+true-branch: `+(bet/conditional #t A B C) = A+` - `+all-bets+` utility -
+Seeded bet reproducibility - Lazy evaluation (single thunk execution) -
+Bet chain and repeat operations - Entropy calculation edge cases
+
+==== stochastic-seeded.rkt
+
+Statistical tests using seeded randomness for reproducibility.
+
+[source,bash]
+----
+racket conformance/stochastic-seeded.rkt
+----
+
+*Covers:* - Uniform distribution verification - Weighted distribution
+verification - Probability estimation accuracy - Expected value
+calculation - Composed function distribution - Entropy convergence to
+theoretical values - Full reproducibility across runs
+
+=== Running All Tests
+
+[source,bash]
+----
+# Smoke test
+racket repl/shell.rkt < conformance/smoke.bet
+
+# Deterministic tests
+racket conformance/deterministic.rkt
+
+# Stochastic tests
+racket conformance/stochastic-seeded.rkt
+----
+
+=== Conformance Requirements
+
+Per SPEC.core.scm, implementations MUST:
+
+[arabic]
+. *Seedability*: All stochastic tests use `+bet-with-seed+` for
+reproducibility
+. *Determinism*: Identical seeds produce identical results
+. *Distribution accuracy*: Statistical properties match formal semantics
+. *Error handling*: Invalid inputs produce deterministic diagnostics
+
+=== Adding New Tests
+
+When adding conformance tests:
+
+[arabic]
+. Use `+bet-with-seed+` for ALL stochastic operations
+. Document expected output/behavior
+. Include in appropriate file (deterministic vs stochastic)
+. Verify test passes on reference implementation (Racket)
