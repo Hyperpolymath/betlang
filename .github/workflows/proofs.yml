@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MPL-2.0
 # This workflow is managed by gh actions-lock.
+# This workflow is managed by gh actions-lock.
 # Machine-check BetLang's formal proofs on every push/PR.
 # See docs/AFFINESCRIPT-ALIGNMENT.adoc (Phase 1).
 name: Proofs
