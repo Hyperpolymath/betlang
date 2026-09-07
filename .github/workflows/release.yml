@@ -164,7 +164,7 @@ jobs:
           sha256sum * > SHA256SUMS.txt
 
       - name: Create Release
-        uses: softprops/action-gh-release@v3.0.2 # v2.2.1
+        uses: softprops/action-gh-release@v3.0.3 # v2.2.1
         with:
           files: release/*
           generate_release_notes: true
